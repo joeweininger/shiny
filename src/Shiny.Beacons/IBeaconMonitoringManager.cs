@@ -41,5 +41,17 @@ namespace Shiny.Beacons
         /// </summary>
         /// <returns></returns>
         Task StopAllMonitoring();
+
+        /// <summary>
+        /// Sets scan filter
+        /// </summary>
+        /// <returns></returns>
+        void SetScanFilter(List<string> scanFilter);
+
+
+        /// <summary>
+        /// Current scan filter set
+        /// </summary>
+        List<string> GetScanFilter();
     }
 }

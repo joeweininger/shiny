@@ -63,5 +63,18 @@ namespace Shiny.Beacons
 
         public async Task<IEnumerable<BeaconRegion>> GetMonitoredRegions()
             => await this.repository.GetAll<BeaconRegion>();
+
+        public List<string> ScanFilter { get; set; } = new List<string>();
+
+        public void SetScanFilter(List<string> scanFilter)
+        {
+            ScanFilter = scanFilter;
+        }
+
+        public List<string> GetScanFilter()
+        {
+            return ScanFilter;
+        }
+
     }
 }

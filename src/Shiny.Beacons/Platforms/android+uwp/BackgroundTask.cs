@@ -97,10 +97,12 @@ namespace Shiny.Beacons
             foreach (var region in regions)
                 this.states.Add(region.Identifier, new BeaconRegionStatus(region));
 
+            var scanFilter = this.beaconManager.GetScanFilter();
+
             try
             {
                 this.scanSub = this.bleManager
-                    .ScanForBeacons(true)
+                    .ScanForBeacons(true, scanFilter)
                     .Buffer(TimeSpan.FromSeconds(5))
                     .SubscribeAsyncConcurrent(this.CheckStates);
 
@@ -148,7 +150,7 @@ namespace Shiny.Beacons
                     if (state.Region.IsBeaconInRegion(beacon))
                     {
                         state.LastPing = DateTime.UtcNow;
-                        state.IsInRange ??= true;
+                        state.IsInRange ??= false;
 
                         if (!state.IsInRange.Value)
                         {

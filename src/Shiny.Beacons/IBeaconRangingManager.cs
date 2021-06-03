@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
@@ -18,6 +19,6 @@ namespace Shiny.Beacons
         /// </summary>
         /// <param name="region"></param>
         /// <returns></returns>
-        IObservable<Beacon> WhenBeaconRanged(BeaconRegion region);
+        IObservable<Beacon> WhenBeaconRanged(BeaconRegion region, List<string> scanFilter = null);
     }
 }

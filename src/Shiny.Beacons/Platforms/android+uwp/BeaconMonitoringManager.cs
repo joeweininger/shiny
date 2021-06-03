@@ -109,6 +109,18 @@ namespace Shiny.Beacons
 // TODO: uwp
 #endif
         }
+
+        public List<string> ScanFilter { get; set; } = new List<string>();
+
+        public void SetScanFilter(List<string> scanFilter)
+        {
+            ScanFilter = scanFilter;
+        }
+
+        public List<string> GetScanFilter()
+        {
+            return ScanFilter;
+        }
     }
 }
 

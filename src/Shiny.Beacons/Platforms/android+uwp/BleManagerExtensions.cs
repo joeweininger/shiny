@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using Shiny.BluetoothLE;
 
@@ -7,13 +8,14 @@ namespace Shiny.Beacons
 {
     public static class BleManagerExtensions
     {
-        public static IObservable<Beacon> ScanForBeacons(this IBleManager manager, bool forMonitoring = false) => manager
+        public static IObservable<Beacon> ScanForBeacons(this IBleManager manager, bool forMonitoring = false, List<string> scanFilters = null) => manager
             .Scan(new ScanConfig
             {
                 //AndroidUseScanBatching = true,
                 ScanType = forMonitoring
                     ? BleScanType.LowPowered
-                    : BleScanType.Balanced
+                    : BleScanType.Balanced,
+                ServiceUuids =  scanFilters ?? new List<string>()
             })
             .Where(x => x.IsBeacon())
             .Select(x => x.AdvertisementData.ManufacturerData.Data.Parse(x.Rssi));

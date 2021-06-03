@@ -7,7 +7,7 @@ using UIKit;
 using Shiny.Beacons;
 using Shiny.Infrastructure;
 using Shiny.Locations;
-
+using System.Collections.Generic;
 
 namespace Shiny.Beacons
 {
@@ -28,7 +28,7 @@ namespace Shiny.Beacons
 
 
         public Task<AccessState> RequestAccess() => this.manager.RequestAccess(false);
-        public IObservable<Beacon> WhenBeaconRanged(BeaconRegion region) => UIDevice.CurrentDevice.CheckSystemVersion(13, 0)
+        public IObservable<Beacon> WhenBeaconRanged(BeaconRegion region, List<string> scanFilter) => UIDevice.CurrentDevice.CheckSystemVersion(13, 0)
             ? this.WhenRanged(region)
             : this.WhenRangedClassic(region);
 
