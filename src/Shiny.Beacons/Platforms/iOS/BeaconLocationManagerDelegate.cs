@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reactive.Subjects;
 using CoreLocation;
-
+using Foundation;
 
 namespace Shiny.Beacons
 {
@@ -35,10 +36,40 @@ namespace Shiny.Beacons
             }
         }
 
+        public override void DidDetermineState(CLLocationManager manager, CLRegionState state, CLRegion region)
+        {
+            if (state == CLRegionState.Inside)
+            {
+                Debug.WriteLine(">>>> LocationManager DidDetermineState: Inside");
+                this.Invoke(region, BeaconRegionState.Entered);
+            }
+            else if (state == CLRegionState.Outside)
+            {
+                Debug.WriteLine(">>>> LocationManager DidDetermineState: Outside");
+                this.Invoke(region, BeaconRegionState.Exited);
+            }
+            else
+            {
+                Debug.WriteLine(">>>> LocationManager DidDetermineState: Unknown");
+                this.Invoke(region, BeaconRegionState.Exited);
+            }
+        }
 
-        public override void RegionEntered(CLLocationManager manager, CLRegion region) => this.Invoke(region, BeaconRegionState.Entered);
-        public override void RegionLeft(CLLocationManager manager, CLRegion region) => this.Invoke(region, BeaconRegionState.Exited);
 
+        public override void DidStartMonitoringForRegion(CLLocationManager manager, CLRegion region)
+        {
+            Debug.WriteLine($">>>> Started monitoring region - {region.Identifier}");
+        }
+
+        public override void Failed(CLLocationManager manager, NSError error)
+        {
+            Debug.WriteLine($">>>> Failed monitoring region - {error.LocalizedDescription}");
+        }
+
+        public override void MonitoringFailed(CLLocationManager manager, CLRegion? region, NSError error)
+        {
+            Debug.WriteLine($">>>> LocationManager MonitoringFailed - {error.LocalizedDescription}");
+        }
 
         async void Invoke(CLRegion region, BeaconRegionState status)
         {

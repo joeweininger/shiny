@@ -23,7 +23,10 @@ namespace Shiny.Beacons
             this.gdelegate = new BeaconLocationManagerDelegate(services);
             this.manager = new CLLocationManager
             {
-                Delegate = this.gdelegate
+                Delegate = this.gdelegate,
+                ShowsBackgroundLocationIndicator = false,
+                AllowsBackgroundLocationUpdates = true,
+                DesiredAccuracy = 200,
             };
         }
 

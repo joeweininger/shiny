@@ -20,7 +20,7 @@ namespace Shiny.Beacons
             if (region.Major == null && region.Minor == null)
                 return true;
 
-            if (region.Major != beacon.Major)
+            if ((region.Major ?? 0) != beacon.Major)
                 return false;
 
             if (region.Minor == null || region.Minor == beacon.Minor)
