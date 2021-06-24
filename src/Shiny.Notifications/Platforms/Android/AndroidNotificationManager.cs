@@ -36,7 +36,9 @@ namespace Shiny.Notifications
                 .SetSmallIcon(this.GetSmallIconResource(notification.Android.SmallIconResourceName))
                 .SetAutoCancel(notification.Android.AutoCancel)
                 .SetOngoing(notification.Android.OnGoing)
+                .SetPriority(1)
                 .SetContentIntent(pendingIntent);
+            
 
             if (!notification.Android.ContentInfo.IsEmpty())
                 builder.SetContentInfo(notification.Android.ContentInfo);
